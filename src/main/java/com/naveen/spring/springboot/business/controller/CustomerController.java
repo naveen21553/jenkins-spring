@@ -39,13 +39,14 @@ public class CustomerController {
 
     @PutMapping("/customers/{cno}")
     public ResponseEntity<Customer> updateCustomer(@PathVariable long cno, @RequestBody Customer customer){
+        customer.setCustomerNo(cno);
         return ResponseEntity.ok().body(this.customerService.updateCustomer(cno, customer));
     }
 
     @DeleteMapping("/customers/{cno}")
-    public ResponseEntity<?> deleteCustomer(@PathVariable long cno){
+    public ResponseEntity<Long> deleteCustomer(@PathVariable long cno){
         this.customerService.deleteCustomer(cno);
-        return (ResponseEntity<?>) ResponseEntity.status(HttpStatus.OK);
-
+        
+        return new ResponseEntity<>(cno, HttpStatus.OK);
     }
 }
